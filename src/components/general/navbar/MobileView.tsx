@@ -10,14 +10,14 @@ const MobileView = ({ menuOpen, setMenuOpen }: MobileViewProps) => {
   return (
     <div className="md:hidden">
       {/* overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-          menuOpen ? "opacity-100" : "opacity-0"
+     <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         {/* menu  */}
         <ul
-          className={`fixed top-18 right-0 z-50 h-[80vh] w-full flex flex-col items-center justify-center gap-10 bg-secondary-background/80 backdrop-blur-xl border-t border-white/10 transition-transform duration-500 ease-in-out ${
+          className={`fixed top-18 right-0 h-[80vh] w-full flex flex-col items-center justify-center gap-10 bg-secondary-background/80 backdrop-blur-xl border-t border-white/10 transition-transform duration-500 ease-in-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -35,6 +35,7 @@ const MobileView = ({ menuOpen, setMenuOpen }: MobileViewProps) => {
           ))}
         </ul>
       </div>
+      
     </div>
   );
 };

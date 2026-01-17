@@ -26,7 +26,7 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <nav className="h-18 backdrop-blur-md backdrop-saturate-50 fixed top-0 left-0 w-full">
+    <nav className="h-18 backdrop-blur-md backdrop-saturate-50 fixed top-0 left-0 w-full z-40">
       <div className="flex justify-between items-center h-full w-[90%] mx-auto">
         <Logo />
 
@@ -36,7 +36,8 @@ const Navbar = () => {
             <span className="hidden md:block ">Search</span>
           </li>
           <li >
-            <Link href='/write' className="flex items-center gap-1 cursor-pointer"><LuNotebookPen size={20} />
+            <Link href='/write' className="flex items-center gap-1 cursor-pointer"><LuNotebookPen size={20} className="block cursor-pointer" />
+            
             <span className="hidden md:block ">Write</span></Link>
           </li>
           {Navlinks.map((elem) => (
