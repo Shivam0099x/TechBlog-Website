@@ -22,7 +22,7 @@ const MobileView = ({ menuOpen, setMenuOpen }: MobileViewProps) => {
           }`}
         >
           {Navlinks.map((elem) => (
-            <li key={elem.url}>
+            <li key={elem.url} className="z-50">
               <Link
                 href={elem.url}
                 onClick={()=>setMenuOpen(false)}

@@ -19,7 +19,7 @@ export default function Home() {
       <div className="py-12 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
-          <div className="relative">
+          <div className="">
             <Image
               src="/images/about.png"
               alt="About Image "

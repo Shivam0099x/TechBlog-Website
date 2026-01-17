@@ -100,7 +100,7 @@ const RecentPosts = () => {
       <h2 className="text-white text-xl md:text-3xl sm:2xl font-semibold">
         Recent Posts
       </h2>
-      {/*  */}
+      {/* Recent Posts  */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <div
