@@ -67,7 +67,18 @@ const Navbar = () => {
               (session ? (
                 <li
                   onClick={handleLogout}
-                  className="bg-red-300 hover:bg-red-500 hover:text-black transition-colors text-gray-600 rounded-full cursor-pointer px-3 py-2 md:px-4 lg:px-5"
+                  className="
+    rounded-full
+    px-3 py-2 md:px-4 lg:px-5
+    text-sm font-medium
+    text-gray-400
+    border border-white/10
+    hover:border-red-400/40
+    hover:text-red-400
+    hover:bg-red-400/10
+    transition-all
+    cursor-pointer
+  "
                 >
                   Logout
                 </li>
