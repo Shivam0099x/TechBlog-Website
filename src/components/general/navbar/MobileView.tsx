@@ -17,7 +17,7 @@ const MobileView = ({ menuOpen, setMenuOpen }: MobileViewProps) => {
       >
         {/* menu  */}
         <ul
-          className={`fixed top-18 right-0 h-[80vh] w-full flex flex-col items-center justify-center gap-10 bg-secondary-background/80 backdrop-blur-xl border-t border-white/10 transition-transform duration-500 ease-in-out ${
+          className={`fixed top-18 right-0 h-[92vh] w-full flex flex-col items-center justify-center gap-10 bg-secondary-background/80 backdrop-blur-xl border-t border-white/10 transition-transform duration-500 ease-in-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
