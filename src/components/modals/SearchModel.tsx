@@ -18,16 +18,7 @@ const results = [
     title: "Mastering React Hooks",
     slug: "/articles/react-hooks",
   },
-  {
-    id: 4,
-    title: "Prisma with PostgreSQL Explained",
-    slug: "/articles/prisma-postgresql",
-  },
-  {
-    id: 5,
-    title: "Building Animations with Framer Motion",
-    slug: "/articles/framer-motion-animations",
-  },
+
 ];
 
 
