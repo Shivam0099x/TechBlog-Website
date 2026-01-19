@@ -1,4 +1,4 @@
-import cloudiary from "@/lib/cloudinary";
+import cloudinary from "@/lib/cloudinary";
 
 export type CloudinaryUploadResult = {
   secure_url: string;
@@ -14,7 +14,7 @@ export async function uploadToCloudinary(
   const dataURL = `data:${file.type};base64,${base64}`;
 
   try {
-    const result = await cloudiary.uploader.upload(dataURL, {
+    const result = await cloudinary.uploader.upload(dataURL, {
       folder: "blog-website",
       transformation: [{ format: "webp" }],
     });
@@ -31,7 +31,7 @@ export async function uploadToCloudinary(
 
 export async function deleteFromCloudinary(publicId: string) {
   try {
-    await cloudiary.uploader.destroy(publicId);
+    await cloudinary.uploader.destroy(publicId);
   } catch (error) {
     console.error("Cloudinary delete error:", error);
   }
