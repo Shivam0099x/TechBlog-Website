@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 import RecentPosts from "@/components/home/RecentPosts";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -56,7 +57,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <RecentPosts />
+      <Suspense fallback={ <p className="text-white text-2xl">Loading</p> }>
+        <RecentPosts />
+      </Suspense>
+      
     </ContainerLayout>
   );
 }
