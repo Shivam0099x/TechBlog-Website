@@ -1,20 +1,26 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import EditPageSkeleton from "@/components/skeletons/EditPageSkeleton";
+import Image from "next/image";
 
 const JoditEditor = dynamic(() => import("jodit-react"), {
   ssr: false,
 });
 
-const WritePage = () => {
+const EditPage = () => {
+  const { postId } = useParams();
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [coverImage, setCoverImage] = useState<null | File>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const config = useMemo(
     () => ({
@@ -80,12 +86,39 @@ const WritePage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const { data } = await axios.get(`/api/posts/${postId}`);
+
+        setTitle(data.title);
+        setContent(data.content);
+        setExcerpt(data.excerpt);
+        setPreviewImage(data.coverImageUrl);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("AXIOS_ERROR:", error.response?.data);
+          alert(error.response?.data?.error || "Failed to load post");
+        } else {
+          console.error("UNKNOWN_ERROR:", error);
+          alert("An unexpected error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (postId) {
+      fetchPost();
+    }
+  }, [postId]);
+
+  if (loading) return <EditPageSkeleton />;
+
   return (
     <section className="max-w-3xl mx-auto px-6 py-20 ">
       {/* Page title  */}
-      <h2 className="mb-10 text-3xl text-white font-bold">
-        Write a New Article
-      </h2>
+      <h2 className="mb-10 text-3xl text-white font-bold">Edit Your Article</h2>
       <form onSubmit={handleSubmit}>
         {/* title */}
         <input
@@ -116,6 +149,11 @@ const WritePage = () => {
           />
         </div>
 
+        {/* Image Preview */}
+        <div className="my-8">
+          <Image src={previewImage} alt="Image preview" width={300} height={300} ></Image>
+        </div>
+
         {/* Editor  */}
         <div className="rounded-2xl overflow-hidden border border-white/10 mb-10">
           <JoditEditor
@@ -128,7 +166,7 @@ const WritePage = () => {
 
         <div className="flex justify-end">
           <button className="px-6 py-3 rounded-full bg-primary cursor-pointer text-white font-semibold transition-colors">
-            {isSubmitting ? "Publishing..." : "Publish"}
+            {isSubmitting ? "Updating..." : "Update"}
           </button>
         </div>
       </form>
@@ -136,4 +174,4 @@ const WritePage = () => {
   );
 };
 
-export default WritePage;
+export default EditPage;
