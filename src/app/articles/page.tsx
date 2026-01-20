@@ -1,18 +1,37 @@
+"use client";
 import ContainerLayout from "@/Layouts/ContainerLayout";
 import { Post } from "@/types/posts";
 import Image from "next/image";
 import Link from "next/link";
+import useInfinitePosts from "@/custom-hooks/usePosts";
+import PostCardSkeleton from "@/components/skeletons/PostViewSkeleton";
 
-const page = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/posts/recent`, {
-    cache: "no-store",
-  });
+const page = () => {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfinitePosts({ limit: 3 });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch Recent Posts ");
+  if (status == "pending") {
+    return (
+      <ContainerLayout>
+       <h2 className="text-white font-semibold text-xl sm:text-2xl md:text-3xl">
+          All Articles
+        </h2>
+        <PostCardSkeleton/>
+      </ContainerLayout>
+    );
   }
 
-  const { posts }: { posts: Post[] } = await res.json();
+  if (status == "error") {
+    return (
+      <ContainerLayout>
+        
+        <p className="text-gray-300">Failed to Load Articles </p>
+      </ContainerLayout>
+    );
+  }
+
+  // console.log(data)
+  const posts = data.pages.flatMap((page) => page.posts) ?? [];
 
   return (
     <ContainerLayout>
@@ -67,11 +86,15 @@ const page = async () => {
         </div>
 
         {/* Load More Button */}
-        <div className="flex justify-center mt-10 ">
-          <button className="border border-white/10 px-8 py-3 rounded-full  bg-secondary-background text-gray-200 font-medium text-sm hover:text-white hover:border-white/20 transition-all duration-300 cursor-pointer">
-            Load More Articles
-          </button>
-        </div>
+        {hasNextPage && (
+          <div className="flex justify-center mt-10 ">
+            <button onClick={()=>fetchNextPage()}
+            disabled={isFetchingNextPage}
+             className="border border-white/10 px-8 py-3 rounded-full  bg-secondary-background text-gray-200 font-medium text-sm hover:text-white hover:border-white/20 transition-all duration-300 cursor-pointer">
+              {isFetchingNextPage?'Loading...':"Load More Articles"}
+            </button>
+          </div>
+        )}
       </div>
     </ContainerLayout>
   );

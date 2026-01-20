@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 import RecentPosts from "@/components/home/RecentPosts";
 import { Suspense } from "react";
+import PostCardSkeleton from "@/components/skeletons/PostViewSkeleton";
 
 export default function Home() {
   return (
@@ -57,7 +58,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Suspense fallback={ <p className="text-white text-2xl">Loading</p> }>
+      <Suspense fallback={ <PostCardSkeleton/> }>
         <RecentPosts />
       </Suspense>
       
