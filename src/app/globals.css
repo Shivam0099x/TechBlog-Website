@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #1e3a8a;
-    --color-background: #000000 ;
-    --color-secondary-background: #121212 ;
-    --color-hover: #181818 ;
+  --color-primary: #1e3a8a;
+  --color-background: #000000;
+  --color-secondary-background: #121212;
+  --color-hover: #181818;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100vw;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.blog-posts h3{
+   color: white !important;
+   font-weight: bold !important;
+   font-size: 1.5rem !important;
 }

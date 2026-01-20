@@ -3,10 +3,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import slugify from "slugify";
 import { headers } from "next/headers";
-import {
-  CloudinaryUploadResult,
-  uploadToCloudinary,
-} from "@/services/cloudinary";
+import {CloudinaryUploadResult, uploadToCloudinary } from "@/services/cloudinary";
 
 export async function POST(req: Request) {
   try {
