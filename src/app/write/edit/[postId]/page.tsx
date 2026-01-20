@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import EditPageSkeleton from "@/components/skeletons/EditPageSkeleton";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const JoditEditor = dynamic(() => import("jodit-react"), {
   ssr: false,
@@ -21,6 +22,7 @@ const EditPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [loading, setLoading] = useState(true);
+  const router = useRouter()
 
   const config = useMemo(
     () => ({
@@ -37,8 +39,8 @@ const EditPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!title || !content || !excerpt || !coverImage) {
-        toast("All Fields are  required", {
+      if (!title  || !excerpt || !coverImage) {
+        toast("Title, excerpt and content are  required", {
           style: {
             color: "white",
             backgroundColor: "#1e3a8a",
@@ -53,25 +55,29 @@ const EditPage = () => {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("excerpt", excerpt);
-      formData.append("coverImage", coverImage);
+      if(coverImage){
+        formData.append("coverImage", coverImage);
+      }
 
-      await axios.post("/api/posts", formData, {
+      const response = await axios.patch(`/api/posts/${postId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      setContent("");
-      setTitle("");
-      setExcerpt("");
-      setCoverImage(null);
 
-      toast("Article Published SuccesFully", {
+      toast("Article Updated SuccesFully", {
         style: {
           color: "white",
           backgroundColor: "#1e3a8a",
         },
       });
+
+      const slug = response.data.slug
+      console.log(slug)
+      
+      router.replace(`/articles/${slug}`)
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast(error.response?.data.error, {
