@@ -79,3 +79,52 @@ export async function POST(req: Request) {
     });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+
+    const DEFAULT_LIMIT = 3;
+
+    const cursor = searchParams.get("cursor");
+
+    const limit = Number(searchParams.get("limit")) || DEFAULT_LIMIT;
+
+    const posts = await prisma.post.findMany({
+      take: limit + 1,
+
+      orderBy: {
+        createdAt: "desc",
+      },
+
+      cursor: cursor ? { id: cursor } : undefined,
+      skip: cursor ? 1 : 0,
+
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        excerpt: true,
+        slug: true,
+        createdAt: true,
+        coverImageUrl: true,
+      },
+    });
+
+    // Determine pagination
+    const hasMore = posts.length > limit;
+    const items = hasMore ? posts.slice(0, limit) : posts;
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    return NextResponse.json({
+      posts: items,
+      nextCursor,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      success: false,
+      message: `Error in GET Route Handler ${error}`,
+      status: 500,
+    });
+  }
+}
