@@ -9,6 +9,14 @@ export async function fetchPosts({pageParam, limit,} : FetchPostsParams):Promise
         }
     })
 
+    return res.data 
+}
+
+
+export async function deletePosts(postId:string){
+    const res = await axios.delete(`/api/posts/${postId}`)
+
     return res.data
    
 }
+

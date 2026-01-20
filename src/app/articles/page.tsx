@@ -3,7 +3,7 @@ import ContainerLayout from "@/Layouts/ContainerLayout";
 import { Post } from "@/types/posts";
 import Image from "next/image";
 import Link from "next/link";
-import useInfinitePosts from "@/custom-hooks/usePosts";
+import {useInfinitePosts} from "@/custom-hooks/usePosts";
 import PostCardSkeleton from "@/components/skeletons/PostViewSkeleton";
 
 const page = () => {
