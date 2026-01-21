@@ -2,18 +2,21 @@ import { FetchPostsResponse } from "@/types/posts"
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import {deletePosts, fetchPosts} from '@/services/posts'
 import { useRouter } from "next/navigation"
+import axios from "axios"
 
-export const useInfinitePosts = ({limit}:{limit:number}) => {
+export function useInfinitePosts({ limit }: { limit: number }) {
   return useInfiniteQuery<FetchPostsResponse>({
-    queryKey:["posts"],
-    queryFn: ({pageParam})=> fetchPosts({
-        pageParam:pageParam as string | null,
-        limit
-    }),
-    initialPageParam : null,
-    getNextPageParam: (lastPage)=> lastPage.nextCursor,
-  })
+    queryKey: ["posts"],
+    queryFn: ({ pageParam }) =>
+      fetchPosts({
+        pageParam: pageParam as string | null,
+        limit,
+      }),
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
 }
+
 
 export function useDeletePost(){
   const queryClient = useQueryClient();
@@ -32,4 +35,16 @@ export function useDeletePost(){
   })
 }
 
+
+export async function searchPosts(query:string){
+  if(!query) return [];
+
+  const res = await axios.get("/api/posts/search",{
+    params:{
+      q:query
+    }
+  });
+
+  return res.data.posts;
+}
 

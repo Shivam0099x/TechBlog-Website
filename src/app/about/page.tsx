@@ -46,7 +46,7 @@ const page = () => {
             {/* Section-3 */}
             <div className="text-center">
                 <h2 className="text-gray-200 text-2xl font-semibold mb-4">Built For Developers</h2>
-                <p className="text-sm text-gray-400 mx-auto leading-relaxed mb-8">Whether you're just starting out or refining your skills, TechBlog is designed to inspire better code, better design, and better thinking.</p>
+                <p className="text-sm text-gray-400 mx-auto leading-relaxed mb-8">Whether you&apos;re just starting out or refining your skills, TechBlog is designed to inspire better code, better design, and better thinking.</p>
                 <Link href='/articles'  className="px-6 py-3 inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-indigo-500 transition-colors text-white font-semibold mb-5" >Explore</Link>
             </div>
             

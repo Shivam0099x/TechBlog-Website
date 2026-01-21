@@ -1,12 +1,11 @@
 "use client";
 import ContainerLayout from "@/Layouts/ContainerLayout";
-import { Post } from "@/types/posts";
 import Image from "next/image";
 import Link from "next/link";
 import {useInfinitePosts} from "@/custom-hooks/usePosts";
 import PostCardSkeleton from "@/components/skeletons/PostViewSkeleton";
 
-const page = () => {
+const Page = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfinitePosts({ limit: 3 });
 
@@ -100,4 +99,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
